@@ -7,7 +7,6 @@ import preload from "vite-plugin-preload";
 export default defineConfig({
   plugins: [react(), preload()],
   assetsInclude: ["**/*.sql"],
-  base: './',
   optimizeDeps: {
     exclude: ["@electric-sql/pglite"],
   },
