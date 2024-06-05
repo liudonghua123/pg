@@ -1,0 +1,44 @@
+name: gh-pages
+on:
+  workflow_dispatch:
+
+# https://docs.github.com/zh/actions/using-jobs/assigning-permissions-to-jobs
+permissions: write-all
+
+env:
+  APP_NAME: pg-app
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build_and_deploy:
+    name: Build depolyable files
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+      - name: 'Initialization'
+        run: |
+          npm i -g pnpm
+          pnpm install
+      - name: 'Building ...'
+        run: |
+          pnpm run build
+      # need to manually commit .nojekyll file
+      # - name: Deploy 🚀
+      #   uses: JamesIves/github-pages-deploy-action@v4
+      #   with:
+      #       folder: dist
+      - name: Deploy 🚀
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
