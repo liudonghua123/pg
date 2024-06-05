@@ -31,7 +31,7 @@ jobs:
           pnpm install
       - name: 'Building ...'
         run: |
-          pnpm run build
+          pnpm run build --base ./
       # need to manually commit .nojekyll file
       # - name: Deploy 🚀
       #   uses: JamesIves/github-pages-deploy-action@v4
